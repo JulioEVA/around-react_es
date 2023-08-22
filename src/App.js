@@ -1,11 +1,9 @@
-import "./App.css";
-
 function App() {
   return (
     <body class="body">
       <header class="header">
         <img
-          src="<%=require('./images/logo.png')%>"
+          src={require("./images/logo.png")}
           alt="Page's logo"
           class="logo"
         />
@@ -16,13 +14,13 @@ function App() {
           <div class="avatar-container">
             <img
               class="avatar"
-              src="<%=require('./images/avatar.jpg')%>"
+              src={require("./images/avatar.jpg")}
               alt="User avatar"
             />
             <button class="avatar-button button">
               <img
                 class="avatar-edit-icon"
-                src="<%=require('./images/avatar-edit.png')%>"
+                src={require("./images/avatar-edit.png")}
                 alt="Avatar edit icon"
               />
             </button>
@@ -31,7 +29,7 @@ function App() {
             <h1 class="profile__title text"></h1>
             <button class="edit-button button">
               <img
-                src="<%=require('./images/edit-button.png')%>"
+                src={require("./images/edit-button.png")}
                 alt="User info edit icon"
               />
             </button>
