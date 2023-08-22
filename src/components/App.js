@@ -3,7 +3,7 @@ function App() {
     <body class="body">
       <header class="header">
         <img
-          src={require("./images/logo.png")}
+          src={require("../images/logo.png")}
           alt="Page's logo"
           class="logo"
         />
@@ -14,13 +14,13 @@ function App() {
           <div class="avatar-container">
             <img
               class="avatar"
-              src={require("./images/avatar.jpg")}
+              src={require("../images/avatar.jpg")}
               alt="User avatar"
             />
             <button class="avatar-button button">
               <img
                 class="avatar-edit-icon"
-                src={require("./images/avatar-edit.png")}
+                src={require("../images/avatar-edit.png")}
                 alt="Avatar edit icon"
               />
             </button>
@@ -29,7 +29,7 @@ function App() {
             <h1 class="profile__title text"></h1>
             <button class="edit-button button">
               <img
-                src={require("./images/edit-button.png")}
+                src={require("../images/edit-button.png")}
                 alt="User info edit icon"
               />
             </button>
@@ -42,10 +42,7 @@ function App() {
       <dialog class="edit-popup form-popup popup">
         <form class="form form-popup__container" novalidate>
           <button type="button" class="close-button button">
-            <img
-              src="<%=require('./images/close-button.png')%>"
-              alt="Close icon"
-            />
+            <img src={require("../images/close-button.png")} alt="Close icon" />
           </button>
           <h2 class="form-popup__title text">Editar perfil</h2>
           <input
@@ -77,7 +74,7 @@ function App() {
         <form class="form form-popup__container" novalidate>
           <button type="button" class="close-button button">
             <img
-              src="<%=require('./images/close-button.png')%>"
+              src={require("../images/close-button.png")}
               alt="Icono de una X"
             />
           </button>
@@ -109,7 +106,7 @@ function App() {
       <dialog class="image-popup popup">
         <button class="close-button button">
           <img
-            src="<%=require('./images/close-button.png')%>"
+            src={require("../images/close-button.png")}
             alt="Icono de una X"
           />
         </button>
@@ -123,7 +120,7 @@ function App() {
       <dialog class="popup confirmation-popup">
         <button class="close-button button">
           <img
-            src="<%=require('./images/close-button.png')%>"
+            src={require("../images/close-button.png")}
             alt="Icono de una X"
           />
         </button>
@@ -135,7 +132,7 @@ function App() {
       <dialog class="popup avatar-popup">
         <button class="close-button button">
           <img
-            src="<%=require('./images/close-button.png')%>"
+            src={require("../images/close-button.png")}
             alt="Icono de una X"
           />
         </button>
@@ -161,7 +158,7 @@ function App() {
           />
           <button class="delete-button button">
             <img
-              src="<%=require('./images/delete-button.png')%>"
+              src={require("../images/delete-button.png")}
               alt="Icono de borrar"
             />
           </button>
@@ -169,7 +166,7 @@ function App() {
           <button class="like-button button">
             <img
               class="like"
-              src="<%=require('./images/like-button.png')%>"
+              src={require("../images/like-button.png")}
               alt="Icono de corazón"
             />
             <div class="like-counter"></div>
