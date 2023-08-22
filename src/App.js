@@ -1,24 +1,184 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <body class="body">
+      <header class="header">
+        <img
+          src="<%=require('./images/logo.png')%>"
+          alt="Page's logo"
+          class="logo"
+        />
+        <hr class="header__separator" />
       </header>
-    </div>
+      <main class="main">
+        <section class="profile">
+          <div class="avatar-container">
+            <img
+              class="avatar"
+              src="<%=require('./images/avatar.jpg')%>"
+              alt="User avatar"
+            />
+            <button class="avatar-button button">
+              <img
+                class="avatar-edit-icon"
+                src="<%=require('./images/avatar-edit.png')%>"
+                alt="Avatar edit icon"
+              />
+            </button>
+          </div>
+          <div class="profile__info">
+            <h1 class="profile__title text"></h1>
+            <button class="edit-button button">
+              <img
+                src="<%=require('./images/edit-button.png')%>"
+                alt="User info edit icon"
+              />
+            </button>
+            <h2 class="profile__subtitle text"></h2>
+          </div>
+          <button class="add-button button"></button>
+        </section>
+        <section class="elements"></section>
+      </main>
+      <dialog class="edit-popup form-popup popup">
+        <form class="form form-popup__container" novalidate>
+          <button type="button" class="close-button button">
+            <img
+              src="<%=require('./images/close-button.png')%>"
+              alt="Close icon"
+            />
+          </button>
+          <h2 class="form-popup__title text">Editar perfil</h2>
+          <input
+            id="name-input"
+            maxlength="40"
+            minlength="2"
+            required
+            class="input"
+            type="text"
+            placeholder="Nombre"
+          />
+          <span class="form__input-error name-input-error text"></span>
+          <input
+            id="about-input"
+            maxlength="200"
+            minlength="2"
+            required
+            class="input"
+            type="text"
+            placeholder="Acerca de mí"
+          />
+          <span class="form__input-error about-input-error text"></span>
+          <button class="save-button button" type="submit">
+            Guardar
+          </button>
+        </form>
+      </dialog>
+      <dialog class="add-popup form-popup popup">
+        <form class="form form-popup__container" novalidate>
+          <button type="button" class="close-button button">
+            <img
+              src="<%=require('./images/close-button.png')%>"
+              alt="Icono de una X"
+            />
+          </button>
+          <h2 class="form-popup__title text">Nuevo lugar</h2>
+          <input
+            id="place-input"
+            maxlength="30"
+            minlength="2"
+            required
+            class="input"
+            type="text"
+            placeholder="Título"
+          />
+          <span class="form__input-error place-input-error text"></span>
+          <input
+            id="link-input"
+            minlength="2"
+            required
+            class="input"
+            type="url"
+            placeholder="Enlace a la imagen"
+          />
+          <span class="form__input-error link-input-error text"></span>
+          <button class="save-button button" type="submit">
+            Crear
+          </button>
+        </form>
+      </dialog>
+      <dialog class="image-popup popup">
+        <button class="close-button button">
+          <img
+            src="<%=require('./images/close-button.png')%>"
+            alt="Icono de una X"
+          />
+        </button>
+        <h2 class="image-popup__title text"></h2>
+        <img
+          src="placeholder"
+          class="image-popup__image"
+          alt="Imagen proporcionada por el usuario"
+        />
+      </dialog>
+      <dialog class="popup confirmation-popup">
+        <button class="close-button button">
+          <img
+            src="<%=require('./images/close-button.png')%>"
+            alt="Icono de una X"
+          />
+        </button>
+        <h2 class="confirmation-popup__title text">¿Estás seguro?</h2>
+        <button class="save-button button" type="submit">
+          Sí
+        </button>
+      </dialog>
+      <dialog class="popup avatar-popup">
+        <button class="close-button button">
+          <img
+            src="<%=require('./images/close-button.png')%>"
+            alt="Icono de una X"
+          />
+        </button>
+        <h2 class="avatar-popup__title text">Cambiar foto de perfil</h2>
+        <input
+          id="avatar-link"
+          minlength="2"
+          required
+          class="input"
+          type="url"
+          placeholder="Enlace a la imagen"
+        />
+        <button class="save-button button" type="submit">
+          Guardar
+        </button>
+      </dialog>
+      <template class="element-template">
+        <div class="element">
+          <img
+            class="element__image"
+            src="placeholder"
+            alt="Imagen proporcionada por el usuario"
+          />
+          <button class="delete-button button">
+            <img
+              src="<%=require('./images/delete-button.png')%>"
+              alt="Icono de borrar"
+            />
+          </button>
+          <h3 class="element__title text"></h3>
+          <button class="like-button button">
+            <img
+              class="like"
+              src="<%=require('./images/like-button.png')%>"
+              alt="Icono de corazón"
+            />
+            <div class="like-counter"></div>
+          </button>
+        </div>
+      </template>
+    </body>
   );
 }
 
