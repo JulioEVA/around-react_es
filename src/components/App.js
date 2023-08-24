@@ -1,179 +1,146 @@
+import Header from "./Header";
+import Main from "./Main";
+
 function App() {
   return (
-    <body class="body">
-      <header class="header">
-        <img
-          src={require("../images/logo.png")}
-          alt="Page's logo"
-          class="logo"
-        />
-        <hr class="header__separator" />
-      </header>
-      <main class="main">
-        <section class="profile">
-          <div class="avatar-container">
-            <img
-              class="avatar"
-              src={require("../images/avatar.jpg")}
-              alt="User avatar"
-            />
-            <button class="avatar-button button">
-              <img
-                class="avatar-edit-icon"
-                src={require("../images/avatar-edit.png")}
-                alt="Avatar edit icon"
-              />
-            </button>
-          </div>
-          <div class="profile__info">
-            <h1 class="profile__title text"></h1>
-            <button class="edit-button button">
-              <img
-                src={require("../images/edit-button.png")}
-                alt="User info edit icon"
-              />
-            </button>
-            <h2 class="profile__subtitle text"></h2>
-          </div>
-          <button class="add-button button"></button>
-        </section>
-        <section class="elements"></section>
-      </main>
-      <dialog class="edit-popup form-popup popup">
-        <form class="form form-popup__container" novalidate>
-          <button type="button" class="close-button button">
+    <>
+      <Header />
+      <Main />
+      <dialog className="edit-popup form-popup popup">
+        <form className="form form-popup__container" noValidate>
+          <button type="button" className="close-button button">
             <img src={require("../images/close-button.png")} alt="Close icon" />
           </button>
-          <h2 class="form-popup__title text">Editar perfil</h2>
+          <h2 className="form-popup__title text">Editar perfil</h2>
           <input
             id="name-input"
-            maxlength="40"
-            minlength="2"
+            maxLength="40"
+            minLength="2"
             required
-            class="input"
+            className="input"
             type="text"
             placeholder="Nombre"
           />
-          <span class="form__input-error name-input-error text"></span>
+          <span className="form__input-error name-input-error text"></span>
           <input
             id="about-input"
-            maxlength="200"
-            minlength="2"
+            maxLength="200"
+            minLength="2"
             required
-            class="input"
+            className="input"
             type="text"
             placeholder="Acerca de mí"
           />
-          <span class="form__input-error about-input-error text"></span>
-          <button class="save-button button" type="submit">
+          <span className="form__input-error about-input-error text"></span>
+          <button className="save-button button" type="submit">
             Guardar
           </button>
         </form>
       </dialog>
-      <dialog class="add-popup form-popup popup">
-        <form class="form form-popup__container" novalidate>
-          <button type="button" class="close-button button">
+      <dialog className="add-popup form-popup popup">
+        <form className="form form-popup__container" noValidate>
+          <button type="button" className="close-button button">
             <img
               src={require("../images/close-button.png")}
               alt="Icono de una X"
             />
           </button>
-          <h2 class="form-popup__title text">Nuevo lugar</h2>
+          <h2 className="form-popup__title text">Nuevo lugar</h2>
           <input
             id="place-input"
-            maxlength="30"
-            minlength="2"
+            maxLength="30"
+            minLength="2"
             required
-            class="input"
+            className="input"
             type="text"
             placeholder="Título"
           />
-          <span class="form__input-error place-input-error text"></span>
+          <span className="form__input-error place-input-error text"></span>
           <input
             id="link-input"
-            minlength="2"
+            minLength="2"
             required
-            class="input"
+            className="input"
             type="url"
             placeholder="Enlace a la imagen"
           />
-          <span class="form__input-error link-input-error text"></span>
-          <button class="save-button button" type="submit">
+          <span className="form__input-error link-input-error text"></span>
+          <button className="save-button button" type="submit">
             Crear
           </button>
         </form>
       </dialog>
-      <dialog class="image-popup popup">
-        <button class="close-button button">
+      <dialog className="image-popup popup">
+        <button className="close-button button">
           <img
             src={require("../images/close-button.png")}
             alt="Icono de una X"
           />
         </button>
-        <h2 class="image-popup__title text"></h2>
+        <h2 className="image-popup__title text"></h2>
         <img
           src="placeholder"
-          class="image-popup__image"
+          className="image-popup__image"
           alt="Imagen proporcionada por el usuario"
         />
       </dialog>
-      <dialog class="popup confirmation-popup">
-        <button class="close-button button">
+      <dialog className="popup confirmation-popup">
+        <button className="close-button button">
           <img
             src={require("../images/close-button.png")}
             alt="Icono de una X"
           />
         </button>
-        <h2 class="confirmation-popup__title text">¿Estás seguro?</h2>
-        <button class="save-button button" type="submit">
+        <h2 className="confirmation-popup__title text">¿Estás seguro?</h2>
+        <button className="save-button button" type="submit">
           Sí
         </button>
       </dialog>
-      <dialog class="popup avatar-popup">
-        <button class="close-button button">
+      <dialog className="popup avatar-popup">
+        <button className="close-button button">
           <img
             src={require("../images/close-button.png")}
             alt="Icono de una X"
           />
         </button>
-        <h2 class="avatar-popup__title text">Cambiar foto de perfil</h2>
+        <h2 className="avatar-popup__title text">Cambiar foto de perfil</h2>
         <input
           id="avatar-link"
-          minlength="2"
+          minLength="2"
           required
-          class="input"
+          className="input"
           type="url"
           placeholder="Enlace a la imagen"
         />
-        <button class="save-button button" type="submit">
+        <button className="save-button button" type="submit">
           Guardar
         </button>
       </dialog>
-      <template class="element-template">
-        <div class="element">
+      <template className="element-template">
+        <div className="element">
           <img
-            class="element__image"
+            className="element__image"
             src="placeholder"
             alt="Imagen proporcionada por el usuario"
           />
-          <button class="delete-button button">
+          <button className="delete-button button">
             <img
               src={require("../images/delete-button.png")}
               alt="Icono de borrar"
             />
           </button>
-          <h3 class="element__title text"></h3>
-          <button class="like-button button">
+          <h3 className="element__title text"></h3>
+          <button className="like-button button">
             <img
-              class="like"
+              className="like"
               src={require("../images/like-button.png")}
               alt="Icono de corazón"
             />
-            <div class="like-counter"></div>
+            <div className="like-counter"></div>
           </button>
         </div>
       </template>
-    </body>
+    </>
   );
 }
 
