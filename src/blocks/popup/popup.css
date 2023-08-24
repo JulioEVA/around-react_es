@@ -3,6 +3,8 @@
   border: 0;
   overflow: visible;
   position: relative;
+
+  border-radius: 10px;
 }
 
 .popup[open] {

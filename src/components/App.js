@@ -1,75 +1,60 @@
 import Header from "./Header";
 import Main from "./Main";
+import PopupWithForm from "./PopupWithForm";
 
 function App() {
   return (
     <>
       <Header />
       <Main />
-      <dialog className="edit-popup form-popup popup">
-        <form className="form form-popup__container" noValidate>
-          <button type="button" className="close-button button">
-            <img src={require("../images/close-button.png")} alt="Close icon" />
-          </button>
-          <h2 className="form-popup__title text">Editar perfil</h2>
-          <input
-            id="name-input"
-            maxLength="40"
-            minLength="2"
-            required
-            className="input"
-            type="text"
-            placeholder="Nombre"
-          />
-          <span className="form__input-error name-input-error text"></span>
-          <input
-            id="about-input"
-            maxLength="200"
-            minLength="2"
-            required
-            className="input"
-            type="text"
-            placeholder="Acerca de mí"
-          />
-          <span className="form__input-error about-input-error text"></span>
-          <button className="save-button button" type="submit">
-            Guardar
-          </button>
-        </form>
-      </dialog>
-      <dialog className="add-popup form-popup popup">
-        <form className="form form-popup__container" noValidate>
-          <button type="button" className="close-button button">
-            <img
-              src={require("../images/close-button.png")}
-              alt="Icono de una X"
-            />
-          </button>
-          <h2 className="form-popup__title text">Nuevo lugar</h2>
-          <input
-            id="place-input"
-            maxLength="30"
-            minLength="2"
-            required
-            className="input"
-            type="text"
-            placeholder="Título"
-          />
-          <span className="form__input-error place-input-error text"></span>
-          <input
-            id="link-input"
-            minLength="2"
-            required
-            className="input"
-            type="url"
-            placeholder="Enlace a la imagen"
-          />
-          <span className="form__input-error link-input-error text"></span>
-          <button className="save-button button" type="submit">
-            Crear
-          </button>
-        </form>
-      </dialog>
+      <PopupWithForm
+        name="edit-popup form-popup"
+        title="Editar perfil"
+        inputId="name-input"
+        placeholder="Nombre"
+        saveButtonText="Guardar"
+        inputMaxLength="40"
+        inputType="text"
+      >
+        <input
+          id="about-input"
+          minLength="2"
+          maxLength="200"
+          required
+          className="input"
+          type="text"
+          placeholder="Acerca de mí"
+        />
+        <span className={`form__input-error about-input-error text`}></span>
+      </PopupWithForm>
+      <PopupWithForm
+        name="add-popup form-popup"
+        title="Nuevo lugar"
+        inputId="place-input"
+        placeholder="Título"
+        saveButtonText="Crear"
+        inputMaxLength="30"
+        inputType="text"
+      >
+        <input
+          id="link-input"
+          minLength="2"
+          required
+          className="input"
+          type="url"
+          placeholder="Enlace a la imagen"
+        />
+        <span className={`form__input-error link-input-error text`}></span>
+      </PopupWithForm>
+      <PopupWithForm
+        name="avatar-popup"
+        title="Cambiar foto de perfil"
+        inputId="avatar-link"
+        maxLength=""
+        type="url"
+        placeholder="Enlace a la imagen"
+        saveButtonText="Guardar"
+      />
       <dialog className="image-popup popup">
         <button className="close-button button">
           <img
