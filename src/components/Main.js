@@ -1,31 +1,33 @@
-function Main() {
-  function handleEditAvatarClick() {
-    const editAvatarPopup = document.querySelector(".avatar-popup");
-    editAvatarPopup.showModal();
-    editAvatarPopup.classList.add("popup_is-opened");
-  }
-  function handleEditProfileClick() {
-    const editProfilePopup = document.querySelector(".edit-popup");
-    editProfilePopup.showModal();
-    editProfilePopup.classList.add("popup_is-opened");
-  }
-  function handleAddPlaceClick() {
-    const addPlacePopup = document.querySelector(".add-popup");
-    addPlacePopup.showModal();
-    addPlacePopup.classList.add("popup_is-opened");
-  }
+import React from "react";
+import api from "../utils/api";
+import Card from "./Card";
 
+function Main(props) {
+  const [userName, setUserName] = React.useState();
+  const [userDescription, setUserDescription] = React.useState();
+  const [userAvatar, setUserAvatar] = React.useState("");
+  const [cards, setCards] = React.useState([]);
+
+  React.useEffect(() => {
+    api.getUserInfo().then((user) => {
+      setUserName(user.name);
+      setUserDescription(user.about);
+      setUserAvatar(user.avatar);
+    });
+  }, [userName, userDescription, userAvatar]);
+
+  React.useEffect(() => {
+    api.getInitialCards().then((cards) => {
+      setCards(cards);
+    });
+  }, []);
   return (
     <main className="main">
       <section className="profile">
         <div className="avatar-container">
-          <img
-            className="avatar"
-            src={require("../images/avatar.jpg")}
-            alt="User avatar"
-          />
+          <img className="avatar" src={userAvatar} alt="User avatar" />
           <button
-            onClick={handleEditAvatarClick}
+            onClick={props.onEditAvatarClick}
             className="avatar-button button"
           >
             <img
@@ -36,9 +38,9 @@ function Main() {
           </button>
         </div>
         <div className="profile__info">
-          <h1 className="profile__title text"></h1>
+          <h1 className="profile__title text">{userName}</h1>
           <button
-            onClick={handleEditProfileClick}
+            onClick={props.onEditProfileClick}
             className="edit-button button"
           >
             <img
@@ -46,14 +48,18 @@ function Main() {
               alt="User info edit icon"
             />
           </button>
-          <h2 className="profile__subtitle text"></h2>
+          <h2 className="profile__subtitle text">{userDescription}</h2>
         </div>
         <button
-          onClick={handleAddPlaceClick}
+          onClick={props.onAddPlaceClick}
           className="add-button button"
         ></button>
       </section>
-      <section className="elements"></section>
+      <section className="elements">
+        {cards.map((card) => (
+          <Card key={card._id} onCardClick={props.onCardClick} card={card} />
+        ))}
+      </section>
     </main>
   );
 }

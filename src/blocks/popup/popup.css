@@ -2,33 +2,24 @@
   padding: 0;
   border: 0;
   overflow: visible;
-  position: relative;
-
+  visibility: visible;
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  inset-block-start: 0px;
+  inset-block-end: 0px;
+  max-width: calc((100% - 6px) - 2em);
+  max-height: calc((100% - 6px) - 2em);
+  user-select: text;
+  inset-inline-start: 0px;
+  inset-inline-end: 0px;
   border-radius: 10px;
+  color: canvastext;
+  margin: auto;
 }
 
 .popup[open] {
-  animation: fade-in 500ms forwards;
-}
-
-.popup[open]::backdrop {
-  animation: fade-in 500ms forwards;
-}
-
-.popup[closing] {
-  display: block;
-  pointer-events: none;
-  inset: 0;
-  animation: fade-out 500ms forwards;
-}
-
-.popup[closing]::backdrop {
-  animation: fade-out 500ms forwards;
-}
-
-.popup::backdrop {
-  background-color: rgba(0, 0, 0, 0.5);
-  opacity: 0;
+  animation: fade-in 500ms ease-in-out forwards;
 }
 
 @keyframes fade-in {

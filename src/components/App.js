@@ -1,12 +1,49 @@
+import React from "react";
 import Header from "./Header";
 import Main from "./Main";
 import PopupWithForm from "./PopupWithForm";
+import ImagePopup from "./ImagePopup";
 
 function App() {
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
+    React.useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
+    React.useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState();
+
+  function handleCardClick(card) {
+    setSelectedCard(card);
+    setIsImagePopupOpen(true);
+  }
+  function handleEditAvatarClick() {
+    setIsEditAvatarPopupOpen(true);
+  }
+  function handleEditProfileClick() {
+    setIsEditProfilePopupOpen(true);
+  }
+  function handleAddPlaceClick() {
+    setIsAddPlacePopupOpen(true);
+  }
+
+  function closeAllPopups() {
+    setIsEditAvatarPopupOpen(false);
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsImagePopupOpen(false);
+    setSelectedCard("");
+  }
+
   return (
     <>
       <Header />
-      <Main />
+      <Main
+        onCardClick={handleCardClick}
+        onEditProfileClick={handleEditProfileClick}
+        onAddPlaceClick={handleAddPlaceClick}
+        onEditAvatarClick={handleEditAvatarClick}
+      />
       <PopupWithForm
         name="edit-popup form-popup"
         title="Editar perfil"
@@ -15,6 +52,8 @@ function App() {
         saveButtonText="Guardar"
         inputMaxLength="40"
         inputType="text"
+        isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
       >
         <input
           id="about-input"
@@ -35,6 +74,8 @@ function App() {
         saveButtonText="Crear"
         inputMaxLength="30"
         inputType="text"
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
       >
         <input
           id="link-input"
@@ -54,21 +95,14 @@ function App() {
         type="url"
         placeholder="Enlace a la imagen"
         saveButtonText="Guardar"
+        isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
       />
-      <dialog className="image-popup popup">
-        <button className="close-button button">
-          <img
-            src={require("../images/close-button.png")}
-            alt="Icono de una X"
-          />
-        </button>
-        <h2 className="image-popup__title text"></h2>
-        <img
-          src="placeholder"
-          className="image-popup__image"
-          alt="Imagen proporcionada por el usuario"
-        />
-      </dialog>
+      <ImagePopup
+        card={selectedCard}
+        onClose={closeAllPopups}
+        isOpen={isImagePopupOpen}
+      />
       <dialog className="popup confirmation-popup">
         <button className="close-button button">
           <img
@@ -81,50 +115,6 @@ function App() {
           Sí
         </button>
       </dialog>
-      <dialog className="popup avatar-popup">
-        <button className="close-button button">
-          <img
-            src={require("../images/close-button.png")}
-            alt="Icono de una X"
-          />
-        </button>
-        <h2 className="avatar-popup__title text">Cambiar foto de perfil</h2>
-        <input
-          id="avatar-link"
-          minLength="2"
-          required
-          className="input"
-          type="url"
-          placeholder="Enlace a la imagen"
-        />
-        <button className="save-button button" type="submit">
-          Guardar
-        </button>
-      </dialog>
-      <template className="element-template">
-        <div className="element">
-          <img
-            className="element__image"
-            src="placeholder"
-            alt="Imagen proporcionada por el usuario"
-          />
-          <button className="delete-button button">
-            <img
-              src={require("../images/delete-button.png")}
-              alt="Icono de borrar"
-            />
-          </button>
-          <h3 className="element__title text"></h3>
-          <button className="like-button button">
-            <img
-              className="like"
-              src={require("../images/like-button.png")}
-              alt="Icono de corazón"
-            />
-            <div className="like-counter"></div>
-          </button>
-        </div>
-      </template>
     </>
   );
 }
