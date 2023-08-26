@@ -14,7 +14,7 @@ function Main(props) {
       setUserDescription(user.about);
       setUserAvatar(user.avatar);
     });
-  }, [userName, userDescription, userAvatar]);
+  }, []);
 
   React.useEffect(() => {
     api.getInitialCards().then((cards) => {
