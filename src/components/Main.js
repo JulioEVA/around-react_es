@@ -8,6 +8,9 @@ function Main(props) {
   const [userAvatar, setUserAvatar] = React.useState("");
   const [cards, setCards] = React.useState([]);
 
+  /**
+   * Calls the API in order to get the initial data to fill the user fields.
+   */
   React.useEffect(() => {
     api.getUserInfo().then((user) => {
       setUserName(user.name);
@@ -16,6 +19,9 @@ function Main(props) {
     });
   }, []);
 
+  /**
+   * Gets the saved cards and stores them in the state variable.
+   */
   React.useEffect(() => {
     api.getInitialCards().then((cards) => {
       setCards(cards);

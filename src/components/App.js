@@ -13,20 +13,37 @@ function App() {
   const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState();
 
+  /**
+   * Stores the given card in the state variable.
+   * @param {*} card The card that is to be stored.
+   */
   function handleCardClick(card) {
     setSelectedCard(card);
     setIsImagePopupOpen(true);
   }
+
+  /**
+   * Changes the state variable status in order to open the given popup
+   */
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
   }
+  /**
+   * Changes the state variable status in order to open the given popup
+   */
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
   }
+  /**
+   * Changes the state variable status in order to open the given popup
+   */
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(true);
   }
 
+  /**
+   * Closes all the popups by restoring the states variables to its default values.
+   */
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
