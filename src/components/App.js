@@ -3,6 +3,7 @@ import Header from "./Header";
 import Main from "./Main";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
+import Footer from "./Footer";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
@@ -61,6 +62,7 @@ function App() {
         onAddPlaceClick={handleAddPlaceClick}
         onEditAvatarClick={handleEditAvatarClick}
       />
+      <Footer />
       <PopupWithForm
         name="edit-popup form-popup"
         title="Editar perfil"
