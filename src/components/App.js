@@ -4,6 +4,8 @@ import Main from "./Main";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import Footer from "./Footer";
+import api from "../utils/api";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
@@ -13,6 +15,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState();
+  const [currentUser, setCurrentUser] = React.useState();
 
   /**
    * Stores the given card in the state variable.
@@ -53,87 +56,98 @@ function App() {
     setSelectedCard("");
   }
 
+  /**
+   * Initially calls the API in order to get the current user.
+   */
+  React.useEffect(() => {
+    api.getUserInfo().then((user) => {
+      setCurrentUser(user);
+    });
+  }, []);
+
   return (
     <>
-      <Header />
-      <Main
-        onCardClick={handleCardClick}
-        onEditProfileClick={handleEditProfileClick}
-        onAddPlaceClick={handleAddPlaceClick}
-        onEditAvatarClick={handleEditAvatarClick}
-      />
-      <Footer />
-      <PopupWithForm
-        name="edit-popup form-popup"
-        title="Editar perfil"
-        inputId="name-input"
-        placeholder="Nombre"
-        saveButtonText="Guardar"
-        inputMaxLength="40"
-        inputType="text"
-        isOpen={isEditProfilePopupOpen}
-        onClose={closeAllPopups}
-      >
-        <input
-          id="about-input"
-          minLength="2"
-          maxLength="200"
-          required
-          className="input"
-          type="text"
-          placeholder="Acerca de mí"
+      <CurrentUserContext.Provider value={currentUser}>
+        <Header />
+        <Main
+          onCardClick={handleCardClick}
+          onEditProfileClick={handleEditProfileClick}
+          onAddPlaceClick={handleAddPlaceClick}
+          onEditAvatarClick={handleEditAvatarClick}
         />
-        <span className={`form__input-error about-input-error text`}></span>
-      </PopupWithForm>
-      <PopupWithForm
-        name="add-popup form-popup"
-        title="Nuevo lugar"
-        inputId="place-input"
-        placeholder="Título"
-        saveButtonText="Crear"
-        inputMaxLength="30"
-        inputType="text"
-        isOpen={isAddPlacePopupOpen}
-        onClose={closeAllPopups}
-      >
-        <input
-          id="link-input"
-          minLength="2"
-          required
-          className="input"
+        <Footer />
+        <PopupWithForm
+          name="edit-popup form-popup"
+          title="Editar perfil"
+          inputId="name-input"
+          placeholder="Nombre"
+          saveButtonText="Guardar"
+          inputMaxLength="40"
+          inputType="text"
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+        >
+          <input
+            id="about-input"
+            minLength="2"
+            maxLength="200"
+            required
+            className="input"
+            type="text"
+            placeholder="Acerca de mí"
+          />
+          <span className={`form__input-error about-input-error text`}></span>
+        </PopupWithForm>
+        <PopupWithForm
+          name="add-popup form-popup"
+          title="Nuevo lugar"
+          inputId="place-input"
+          placeholder="Título"
+          saveButtonText="Crear"
+          inputMaxLength="30"
+          inputType="text"
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+        >
+          <input
+            id="link-input"
+            minLength="2"
+            required
+            className="input"
+            type="url"
+            placeholder="Enlace a la imagen"
+          />
+          <span className={`form__input-error link-input-error text`}></span>
+        </PopupWithForm>
+        <PopupWithForm
+          name="avatar-popup"
+          title="Cambiar foto de perfil"
+          inputId="avatar-link"
+          maxLength=""
           type="url"
           placeholder="Enlace a la imagen"
+          saveButtonText="Guardar"
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
         />
-        <span className={`form__input-error link-input-error text`}></span>
-      </PopupWithForm>
-      <PopupWithForm
-        name="avatar-popup"
-        title="Cambiar foto de perfil"
-        inputId="avatar-link"
-        maxLength=""
-        type="url"
-        placeholder="Enlace a la imagen"
-        saveButtonText="Guardar"
-        isOpen={isEditAvatarPopupOpen}
-        onClose={closeAllPopups}
-      />
-      <ImagePopup
-        card={selectedCard}
-        onClose={closeAllPopups}
-        isOpen={isImagePopupOpen}
-      />
-      <dialog className="popup confirmation-popup">
-        <button className="close-button button">
-          <img
-            src={require("../images/close-button.png")}
-            alt="Icono de una X"
-          />
-        </button>
-        <h2 className="confirmation-popup__title text">¿Estás seguro?</h2>
-        <button className="save-button button" type="submit">
-          Sí
-        </button>
-      </dialog>
+        <ImagePopup
+          card={selectedCard}
+          onClose={closeAllPopups}
+          isOpen={isImagePopupOpen}
+        />
+        <dialog className="popup confirmation-popup">
+          <button className="close-button button">
+            <img
+              src={require("../images/close-button.png")}
+              alt="Icono de una X"
+            />
+          </button>
+          <h2 className="confirmation-popup__title text">¿Estás seguro?</h2>
+          <button className="save-button button" type="submit">
+            Sí
+          </button>
+        </dialog>
+      </CurrentUserContext.Provider>
     </>
   );
 }

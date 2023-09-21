@@ -1,22 +1,22 @@
 import React from "react";
 import api from "../utils/api";
 import Card from "./Card";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Main(props) {
   const [userName, setUserName] = React.useState();
   const [userDescription, setUserDescription] = React.useState();
   const [userAvatar, setUserAvatar] = React.useState("");
   const [cards, setCards] = React.useState([]);
+  const currentUser = React.useContext(CurrentUserContext);
 
   /**
    * Calls the API in order to get the initial data to fill the user fields.
    */
   React.useEffect(() => {
-    api.getUserInfo().then((user) => {
-      setUserName(user.name);
-      setUserDescription(user.about);
-      setUserAvatar(user.avatar);
-    });
+    setUserName(currentUser.name);
+    setUserDescription(currentUser.about);
+    setUserAvatar(currentUser.avatar);
   }, []);
 
   /**
