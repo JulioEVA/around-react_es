@@ -25,6 +25,10 @@ function Card(props) {
     props.onCardLike(props.card, isLiked);
   }
 
+  function handleDeleteClick() {
+    props.onCardDelete(props.card, isOwn);
+  }
+
   return (
     <div className="element">
       <img
@@ -33,7 +37,7 @@ function Card(props) {
         src={props.card.link}
         alt="Imagen proporcionada por el usuario"
       />
-      <button className={cardDeleteButtonClassName}>
+      <button onClick={handleDeleteClick} className={cardDeleteButtonClassName}>
         <img
           src={require("../images/delete-button.png")}
           alt="Icono de borrar"

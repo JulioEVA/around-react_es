@@ -20,20 +20,26 @@ function Main(props) {
     //Envía una petición a la API y obteón los datos actualizados de la tarjeta
     if (!isLiked) {
       api.likeCard(card._id).then((newCard) => {
-        setCards((state) =>
-          state.map((c) => (c._id === card._id ? newCard : c))
-        );
+        _refreshCards(card, newCard);
       });
     } else {
       api.dislikeCard(card._id).then((newCard) => {
-        setCards((state) =>
-          state.map((c) => (c._id === card._id ? newCard : c))
-        );
+        _refreshCards(card, newCard);
       });
     }
   }
 
-  function handleCardDelete(card, isOwn) {}
+  function _refreshCards(card, newCard) {
+    setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
+  }
+
+  function handleCardDelete(card, isOwn) {
+    if (isOwn) {
+      api.deleteCard(card._id).then(() => {
+        setCards(cards.filter((c) => c._id != card._id));
+      });
+    }
+  }
   return (
     <main className="main">
       <section className="profile">
@@ -75,6 +81,7 @@ function Main(props) {
             onCardClick={props.onCardClick}
             card={card}
             onCardLike={handleCardLike}
+            onCardDelete={handleCardDelete}
           />
         ))}
       </section>
