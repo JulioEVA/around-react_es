@@ -53,8 +53,8 @@ export class Api {
    * Gets the server-saved user info.
    * @returns A JSON promise with the previously saved user info
    */
-  getUserInfo() {
-    return this._callApi(this._userUrl, this._headers);
+  async getUserInfo() {
+    return await this._callApi(this._userUrl, this._headers);
   }
 
   /**
