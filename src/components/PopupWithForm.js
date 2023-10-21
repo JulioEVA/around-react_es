@@ -1,35 +1,78 @@
-function PopupWithForm(props) {
+import React from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+function PopupWithForm({
+  isOpen,
+  className,
+  onClose,
+  title,
+  inputId,
+  inputMaxLength,
+  inputType,
+  placeholder,
+  children,
+  saveButtonText,
+  onSubmit,
+}) {
+  const [name, setName] = React.useState("");
+  // Suscripción al contexto
+  const currentUser = React.useContext(CurrentUserContext);
+
+  /**
+   * Updates the value of the state variable name whenever the input changes.
+   * @param {*} e
+   */
+  function handleChange(e) {
+    setName(e.target.value);
+  }
+
+  /**
+   * Submbits the data to the server through the onSubmit method
+   * @param {*} e The submbit event
+   */
+  function handleSubmit(e) {
+    onSubmit(e, name);
+  }
+
+  // Después de cargar el usuario actual desde la API
+  // sus datos serán usados en componentes gestionados.
+  React.useEffect(() => {
+    setName(currentUser.name);
+  }, [currentUser]);
+
   return (
     <div
       className={`dialog-container ${
-        props.isOpen ? "dialog-container_is-visible " : ""
+        isOpen ? "dialog-container_is-visible " : ""
       }`}
     >
-      <dialog className={`${props.name} popup`} open={props.isOpen}>
+      <dialog className={`${className} popup`} open={isOpen}>
         <form className="form form-popup__container" noValidate>
           <button
-            onClick={props.onClose}
+            onClick={onClose}
             type="button"
             className="close-button button"
           >
             <img src={require("../images/close-button.png")} alt="Close icon" />
           </button>
-          <h2 className="form-popup__title text">{props.title}</h2>
+          <h2 className="form-popup__title text">{title}</h2>
           <input
-            id={props.inputId}
-            maxLength={props.inputMaxLength}
+            onChange={handleChange}
+            id={inputId}
+            maxLength={inputMaxLength}
             minLength="2"
             required
             className="input"
-            type={props.inputType}
-            placeholder={props.placeholder}
+            type={inputType}
+            placeholder={placeholder}
           />
-          <span
-            className={`form__input-error ${props.inputId}-error text`}
-          ></span>
-          {props.children}
-          <button className="save-button button" type="submit">
-            {props.saveButtonText}
+          <span className={`form__input-error ${inputId}-error text`}></span>
+          {children}
+          <button
+            className="save-button button"
+            onClick={handleSubmit}
+            type="submit"
+          >
+            {saveButtonText}
           </button>
         </form>
       </dialog>

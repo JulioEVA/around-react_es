@@ -36,7 +36,7 @@ function Main(props) {
   function handleCardDelete(card, isOwn) {
     if (isOwn) {
       api.deleteCard(card._id).then(() => {
-        setCards(cards.filter((c) => c._id != card._id));
+        setCards(cards.filter((c) => c._id !== card._id));
       });
     }
   }

@@ -6,6 +6,7 @@ import ImagePopup from "./ImagePopup";
 import Footer from "./Footer";
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import EditProfilePopup from "./EditProfilePopup";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
@@ -56,6 +57,13 @@ function App() {
     setSelectedCard("");
   }
 
+  function handleUpdateUser(user) {
+    api.setUserInfo(user).then((updatedUser) => {
+      setCurrentUser(updatedUser);
+      closeAllPopups();
+    });
+  }
+
   /**
    * Initially calls the API in order to get the current user.
    */
@@ -75,30 +83,13 @@ function App() {
           onEditAvatarClick={handleEditAvatarClick}
         />
         <Footer />
-        <PopupWithForm
-          name="edit-popup form-popup"
-          title="Editar perfil"
-          inputId="name-input"
-          placeholder="Nombre"
-          saveButtonText="Guardar"
-          inputMaxLength="40"
-          inputType="text"
+        <EditProfilePopup
+          onUpdateUser={handleUpdateUser}
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
-        >
-          <input
-            id="about-input"
-            minLength="2"
-            maxLength="200"
-            required
-            className="input"
-            type="text"
-            placeholder="Acerca de mí"
-          />
-          <span className={`form__input-error about-input-error text`}></span>
-        </PopupWithForm>
+        />
         <PopupWithForm
-          name="add-popup form-popup"
+          className="add-popup form-popup"
           title="Nuevo lugar"
           inputId="place-input"
           placeholder="Título"
@@ -119,7 +110,7 @@ function App() {
           <span className={`form__input-error link-input-error text`}></span>
         </PopupWithForm>
         <PopupWithForm
-          name="avatar-popup"
+          className="avatar-popup"
           title="Cambiar foto de perfil"
           inputId="avatar-link"
           maxLength=""
