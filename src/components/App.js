@@ -8,6 +8,7 @@ import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
@@ -18,6 +19,7 @@ function App() {
   const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState();
   const [currentUser, setCurrentUser] = React.useState("");
+  const [cards, setCards] = React.useState([]);
 
   /**
    * Stores the given card in the state variable.
@@ -81,6 +83,53 @@ function App() {
   }
 
   /**
+   * Handles the like interaction when a user likes a card
+   * @param {*} card The card that was liked
+   * @param {*} isLiked Value that determines whether or not the card was previously liked
+   */
+  function handleCardLike(card, isLiked) {
+    //Envía una petición a la API y obteón los datos actualizados de la tarjeta
+    if (!isLiked) {
+      api.likeCard(card._id).then((newCard) => {
+        _refreshCards(card, newCard);
+      });
+    } else {
+      api.dislikeCard(card._id).then((newCard) => {
+        _refreshCards(card, newCard);
+      });
+    }
+  }
+
+  /**
+   * Refreshes the array of cards by replacing the card with the newCard
+   * @param {*} card The card that was liked
+   * @param {*} newCard The card with the like info updated
+   */
+  function _refreshCards(card, newCard) {
+    setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
+  }
+
+  /**
+   * Handles the request to delete a card
+   * @param {*} card The card to delete
+   * @param {*} isOwn Whether or not the card belongs to the current user
+   */
+  function handleCardDelete(card, isOwn) {
+    if (isOwn) {
+      api.deleteCard(card._id).then(() => {
+        setCards(cards.filter((c) => c._id !== card._id));
+      });
+    }
+  }
+
+  function handleAddPlaceSubmit(card) {
+    api.createCard(card).then((newCard) => {
+      setCards([newCard, ...cards]);
+      closeAllPopups();
+    });
+  }
+
+  /**
    * Initially calls the API in order to get the current user.
    */
   React.useEffect(() => {
@@ -88,6 +137,16 @@ function App() {
       setCurrentUser(user);
     });
   }, []);
+
+  /**
+   * Gets the saved cards and stores them in the state variable.
+   */
+  React.useEffect(() => {
+    api.getInitialCards().then((cards) => {
+      setCards(cards);
+    });
+  }, []);
+
   return (
     <>
       <CurrentUserContext.Provider value={currentUser}>
@@ -97,6 +156,9 @@ function App() {
           onEditProfileClick={handleEditProfileClick}
           onAddPlaceClick={handleAddPlaceClick}
           onEditAvatarClick={handleEditAvatarClick}
+          cards={cards}
+          onCardDelete={handleCardDelete}
+          onCardLike={handleCardLike}
         />
         <Footer />
         <EditProfilePopup
@@ -104,27 +166,11 @@ function App() {
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
         />
-        <PopupWithForm
-          className="add-popup form-popup"
-          title="Nuevo lugar"
-          inputId="place-input"
-          placeholder="Título"
-          saveButtonText="Crear"
-          inputMaxLength="30"
-          inputType="text"
+        <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
-        >
-          <input
-            id="link-input"
-            minLength="2"
-            required
-            className="input"
-            type="url"
-            placeholder="Enlace a la imagen"
-          />
-          <span className={`form__input-error link-input-error text`}></span>
-        </PopupWithForm>
+          onAddPlaceSubmit={handleAddPlaceSubmit}
+        />
         <EditAvatarPopup
           onUpdateAvatar={handleUpdateAvatar}
           isOpen={isEditAvatarPopupOpen}

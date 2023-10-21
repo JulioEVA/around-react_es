@@ -1,45 +1,10 @@
 import React from "react";
-import api from "../utils/api";
 import Card from "./Card";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function Main(props) {
-  const [cards, setCards] = React.useState([]);
+function Main({ cards, onCardLike, onCardDelete, ...props }) {
   const currentUser = React.useContext(CurrentUserContext);
 
-  /**
-   * Gets the saved cards and stores them in the state variable.
-   */
-  React.useEffect(() => {
-    api.getInitialCards().then((cards) => {
-      setCards(cards);
-    });
-  }, []);
-
-  function handleCardLike(card, isLiked) {
-    //Envía una petición a la API y obteón los datos actualizados de la tarjeta
-    if (!isLiked) {
-      api.likeCard(card._id).then((newCard) => {
-        _refreshCards(card, newCard);
-      });
-    } else {
-      api.dislikeCard(card._id).then((newCard) => {
-        _refreshCards(card, newCard);
-      });
-    }
-  }
-
-  function _refreshCards(card, newCard) {
-    setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
-  }
-
-  function handleCardDelete(card, isOwn) {
-    if (isOwn) {
-      api.deleteCard(card._id).then(() => {
-        setCards(cards.filter((c) => c._id !== card._id));
-      });
-    }
-  }
   return (
     <main className="main">
       <section className="profile">
@@ -80,8 +45,8 @@ function Main(props) {
             key={card._id}
             onCardClick={props.onCardClick}
             card={card}
-            onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete}
+            onCardLike={onCardLike}
+            onCardDelete={onCardDelete}
           />
         ))}
       </section>

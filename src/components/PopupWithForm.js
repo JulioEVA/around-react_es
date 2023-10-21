@@ -30,7 +30,7 @@ function PopupWithForm({
    * @param {*} e The submbit event
    */
   function handleSubmit(e) {
-    if (inputId.includes("avatar-link")) {
+    if (inputId.includes("avatar-link" || "place-input")) {
       onSubmit(e, inputRef);
       return;
     }
