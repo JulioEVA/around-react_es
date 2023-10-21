@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 function PopupWithForm({
   isOpen,
@@ -16,7 +16,7 @@ function PopupWithForm({
   const [name, setName] = React.useState("");
   // Suscripción al contexto
   const currentUser = React.useContext(CurrentUserContext);
-
+  const inputRef = useRef(null);
   /**
    * Updates the value of the state variable name whenever the input changes.
    * @param {*} e
@@ -30,6 +30,10 @@ function PopupWithForm({
    * @param {*} e The submbit event
    */
   function handleSubmit(e) {
+    if (inputId.includes("avatar-link")) {
+      onSubmit(e, inputRef);
+      return;
+    }
     onSubmit(e, name);
   }
 
@@ -56,6 +60,7 @@ function PopupWithForm({
           </button>
           <h2 className="form-popup__title text">{title}</h2>
           <input
+            ref={inputRef}
             onChange={handleChange}
             id={inputId}
             maxLength={inputMaxLength}

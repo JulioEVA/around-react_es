@@ -7,6 +7,7 @@ import Footer from "./Footer";
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
@@ -57,8 +58,23 @@ function App() {
     setSelectedCard("");
   }
 
+  /**
+   * Sets the user info through the API given the parameter user
+   * @param {*} user The user with the updated info
+   */
   function handleUpdateUser(user) {
     api.setUserInfo(user).then((updatedUser) => {
+      setCurrentUser(updatedUser);
+      closeAllPopups();
+    });
+  }
+
+  /**
+   * Changes the avatar photo by the given link
+   * @param {*} avatar An object containing the link to the new picture
+   */
+  function handleUpdateAvatar({ avatar }) {
+    api.updateUserAvatar(avatar).then((updatedUser) => {
       setCurrentUser(updatedUser);
       closeAllPopups();
     });
@@ -109,14 +125,8 @@ function App() {
           />
           <span className={`form__input-error link-input-error text`}></span>
         </PopupWithForm>
-        <PopupWithForm
-          className="avatar-popup"
-          title="Cambiar foto de perfil"
-          inputId="avatar-link"
-          maxLength=""
-          type="url"
-          placeholder="Enlace a la imagen"
-          saveButtonText="Guardar"
+        <EditAvatarPopup
+          onUpdateAvatar={handleUpdateAvatar}
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
         />
