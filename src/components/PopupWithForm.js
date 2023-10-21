@@ -69,6 +69,7 @@ function PopupWithForm({
             className="input"
             type={inputType}
             placeholder={placeholder}
+            value={inputId.includes("name-input") ? name : ""}
           />
           <span className={`form__input-error ${inputId}-error text`}></span>
           {children}

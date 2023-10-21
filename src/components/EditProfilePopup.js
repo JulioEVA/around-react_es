@@ -53,6 +53,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
           className="input"
           type="text"
           placeholder="Acerca de mí"
+          value={currentUser.about}
         />
         <span className={`form__input-error about-input-error text`}></span>
       </PopupWithForm>
